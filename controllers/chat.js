@@ -2,7 +2,8 @@ const Groq = require('groq-sdk');
 const axios = require('axios');
 const { authServiceUrl, groqApiKey } = require('../config/config');
 
-const groq = new Groq({ apiKey: groqApiKey });
+// Only create the client when a key is set: the SDK throws without one, and chat() answers 503 then.
+const groq = groqApiKey ? new Groq({ apiKey: groqApiKey }) : null;
 
 const SYSTEM_PROMPT = `You are a helpful assistant for a vacation rental / property booking platform called Kelsey. You help users find units (apartments, condos, villas, etc.) to rent.
 
